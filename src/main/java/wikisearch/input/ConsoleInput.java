@@ -1,6 +1,5 @@
 package wikisearch.input;
 
-import java.nio.charset.Charset;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Scanner;
@@ -9,9 +8,8 @@ public class ConsoleInput {
 
     private static final String EXIT_COMMAND = "выход";
 
-    private final Scanner scanner = new Scanner(System.in, consoleCharset());
+    private final Scanner scanner = new Scanner(System.in);
 
-    // Возвращает пустой Optional, если пользователь решил выйти
     public Optional<String> readQuery() {
         while (true) {
             System.out.print("Введите запрос (или «" + EXIT_COMMAND + "» для завершения): ");
@@ -30,7 +28,6 @@ public class ConsoleInput {
         }
     }
 
-    // Возвращает номер статьи от 1 до max или пустой OptionalInt, если пользователь вернулся к поиску
     public OptionalInt readChoice(int max) {
         if (max < 1) {
             throw new IllegalArgumentException("Нет статей для выбора");
@@ -57,14 +54,5 @@ public class ConsoleInput {
             }
             return OptionalInt.of(number);
         }
-    }
-
-    // В консоли Windows кодировка не UTF-8, без этого русские буквы прочитаются неправильно
-    private static Charset consoleCharset() {
-        String name = System.getProperty("stdin.encoding", System.getProperty("stdout.encoding"));
-        if (name == null) {
-            return Charset.defaultCharset();
-        }
-        return Charset.forName(name);
     }
 }
