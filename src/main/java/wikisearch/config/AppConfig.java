@@ -41,6 +41,10 @@ public class AppConfig {
         return getInt("request.timeout.seconds");
     }
 
+    public String getUserAgent() {
+        return getString("user.agent");
+    }
+
     private String getString(String key) {
         String value = properties.getProperty(key);
         if (value == null || value.isBlank()) {
